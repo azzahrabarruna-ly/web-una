@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Prototype Dashboard Penjadwalan Hemodialisis - Praktikum Pertemuan 7" />
+  <title>Dashboard Penjadwalan Hemodialisis</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">PRAKTIKUM PERTEMUAN 7</p>
+      <h1>Dashboard Penjadwalan Hemodialisis</h1>
+      <p class="subtitle">Prototype berbasis HTML, CSS, dan JavaScript • Data 100% sintetis</p>
+    </div>
+    <div class="date-box">
+      <span>Hari/Tanggal</span>
+      <strong id="currentDate">-</strong>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="notice" aria-label="Catatan etika data">
+      <strong>Catatan Etika:</strong>
+      Jangan menggunakan nama, NIK, nomor rekam medis, alamat, nomor telepon, atau data pasien nyata.
+      Gunakan hanya kode pasien sintetis seperti P001, P002, dan seterusnya.
+    </section>
+
+    <section class="summary-grid" aria-label="Ringkasan layanan">
+      <article class="stat-card">
+        <span>Total Terjadwal</span>
+        <strong id="countTotal">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Selesai</span>
+        <strong id="countSelesai">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Berlangsung</span>
+        <strong id="countBerlangsung">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Menunggu</span>
+        <strong id="countMenunggu">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Terlambat</span>
+        <strong id="countTerlambat">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Batal</span>
+        <strong id="countBatal">0</strong>
+      </article>
+    </section>
+
+    <section class="section-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PERINGATAN OTOMATIS</p>
+          <h2>Kontrol Risiko Penjadwalan</h2>
+        </div>
+        <button id="resetBtn" class="btn secondary" type="button">Reset Filter</button>
+      </div>
+      <div id="warningArea" class="warning-grid"></div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FILTER</p>
+          <h2>Jadwal Hemodialisis</h2>
+        </div>
+        <p class="muted"><span id="visibleCount">0</span> data ditampilkan</p>
+      </div>
+
+      <div class="filters">
+        <label>
+          Sesi
+          <select id="filterSession">
+            <option value="Semua">Semua Sesi</option>
+            <option value="Pagi">Pagi</option>
+            <option value="Siang">Siang</option>
+          </select>
+        </label>
+
+        <label>
+          Status
+          <select id="filterStatus">
+            <option value="Semua">Semua Status</option>
+            <option value="Terjadwal">Terjadwal</option>
+            <option value="Menunggu">Menunggu</option>
+            <option value="Berlangsung">Berlangsung</option>
+            <option value="Selesai">Selesai</option>
+            <option value="Terlambat">Terlambat</option>
+            <option value="Batal">Batal</option>
+          </select>
+        </label>
+
+        <label>
+          Mesin
+          <select id="filterMachine">
+            <option value="Semua">Semua Mesin</option>
+          </select>
+        </label>
+
+        <label class="search-label">
+          Cari Kode Pasien
+          <input id="searchPatient" type="search" placeholder="Contoh: P001" />
+        </label>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Kode Pasien</th>
+              <th>Sesi</th>
+              <th>Mesin</th>
+              <th>Mulai</th>
+              <th>Estimasi Selesai</th>
+              <th>Status</th>
+              <th>Catatan</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="two-column">
+      <article class="section-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">KAPASITAS</p>
+            <h2>Status Mesin HD</h2>
+          </div>
+        </div>
+        <div id="machineGrid" class="machine-grid"></div>
+      </article>
+
+      <article class="section-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">INDIKATOR</p>
+            <h2>Pemanfaatan Sesi</h2>
+          </div>
+        </div>
+
+        <div class="session-indicator">
+          <div class="indicator-row">
+            <div>
+              <strong>Sesi Pagi</strong>
+              <span id="pagiText">0 pasien</span>
+            </div>
+            <div class="progress">
+              <div id="pagiBar" class="progress-bar"></div>
+            </div>
+          </div>
+
+          <div class="indicator-row">
+            <div>
+              <strong>Sesi Siang</strong>
+              <span id="siangText">0 pasien</span>
+            </div>
+            <div class="progress">
+              <div id="siangBar" class="progress-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini-note">
+          <strong>Diskusi kelompok:</strong>
+          Apakah dashboard ini sudah cukup membantu petugas HD mencegah jadwal bentrok,
+          memantau mesin maintenance, dan melihat keterlambatan?
+        </div>
+      </article>
+    </section>
+
+    <section class="section-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">TUGAS PENGEMBANGAN</p>
+          <h2>Yang Harus Dimodifikasi Kelompok</h2>
+        </div>
+      </div>
+      <ol class="task-list">
+        <li>Ubah tampilan agar memiliki identitas/desain kelompok sendiri.</li>
+        <li>Gunakan data sintetis minimal 12–20 pasien dan 4–8 mesin HD.</li>
+        <li>Pastikan sesi pagi dan sesi siang terlihat jelas.</li>
+        <li>Tambahkan minimal satu fitur atau peringatan baru.</li>
+        <li>Unggah seluruh folder ke GitHub dan deploy ke Netlify.</li>
+        <li>Pastikan link Netlify dapat dibuka dari browser/HP.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    Prototype Praktikum Transformasi Manajemen Informasi Kesehatan Ginjal • Data Sintetis
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
