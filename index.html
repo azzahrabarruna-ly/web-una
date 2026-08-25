@@ -6,14 +6,168 @@
   <meta name="description" content="Prototype Dashboard Penjadwalan Hemodialisis - Praktikum Pertemuan 7" />
   <title>Dashboard Penjadwalan Hemodialisis</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- TEMA WARNA KELOMPOK -->
+  <style>
+    :root {
+      --primary: #159a9c;
+      --primary-dark: #087f82;
+      --secondary: #f3c94b;
+      --light: #eefafa;
+      --text: #183b3d;
+      --border: #cce5e5;
+    }
+
+    body {
+      background: #f5fbfb;
+      color: var(--text);
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, #159a9c, #087f82);
+      color: white;
+    }
+
+    .eyebrow {
+      color: var(--secondary);
+    }
+
+    .date-box {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .notice {
+      background: #fff8dc;
+      border-left: 5px solid var(--secondary);
+    }
+
+    .stat-card {
+      border-top: 4px solid var(--primary);
+    }
+
+    .stat-card strong {
+      color: var(--primary-dark);
+    }
+
+    .section-card {
+      border: 1px solid var(--border);
+    }
+
+    .section-heading h2 {
+      color: var(--primary-dark);
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    select,
+    input {
+      border: 1px solid var(--border);
+    }
+
+    select:focus,
+    input:focus {
+      outline: 2px solid rgba(21, 154, 156, 0.25);
+      border-color: var(--primary);
+    }
+
+    th {
+      background: var(--primary);
+      color: white;
+    }
+
+    tr:hover {
+      background: var(--light);
+    }
+
+    .progress-bar {
+      background: var(--primary);
+    }
+
+    .machine-grid .machine-card {
+      border-left: 4px solid var(--primary);
+    }
+
+    .mini-note {
+      background: #fff8dc;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .group-section {
+      margin-top: 24px;
+      text-align: center;
+      background: linear-gradient(135deg, #eefafa, #fffdf2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .group-section h2 {
+      margin: 0 0 6px;
+      color: var(--primary-dark);
+    }
+
+    .group-section .group-title {
+      color: #666;
+      margin-bottom: 18px;
+    }
+
+    .member-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .member-table th {
+      background: var(--primary-dark);
+      color: white;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .member-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid #e5eeee;
+      text-align: left;
+    }
+
+    .member-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .member-table tr:hover {
+      background: #eefafa;
+    }
+
+    footer {
+      background: var(--primary-dark);
+      color: white;
+    }
+  </style>
 </head>
+
 <body>
+
   <header class="topbar">
     <div>
       <p class="eyebrow">PRAKTIKUM PERTEMUAN 7</p>
       <h1>Dashboard Penjadwalan Hemodialisis</h1>
-      <p class="subtitle">Prototype berbasis HTML, CSS, dan JavaScript • Data 100% sintetis</p>
+      <p class="subtitle">
+        Prototype berbasis HTML, CSS, dan JavaScript • Data 100% sintetis
+      </p>
     </div>
+
     <div class="date-box">
       <span>Hari/Tanggal</span>
       <strong id="currentDate">-</strong>
@@ -21,10 +175,12 @@
   </header>
 
   <main class="container">
+
     <section class="notice" aria-label="Catatan etika data">
       <strong>Catatan Etika:</strong>
-      Jangan menggunakan nama, NIK, nomor rekam medis, alamat, nomor telepon, atau data pasien nyata.
-      Gunakan hanya kode pasien sintetis seperti P001, P002, dan seterusnya.
+      Jangan menggunakan nama, NIK, nomor rekam medis, alamat, nomor telepon,
+      atau data pasien nyata. Gunakan hanya kode pasien sintetis seperti P001,
+      P002, dan seterusnya.
     </section>
 
     <section class="summary-grid" aria-label="Ringkasan layanan">
@@ -32,22 +188,27 @@
         <span>Total Terjadwal</span>
         <strong id="countTotal">0</strong>
       </article>
+
       <article class="stat-card">
         <span>Selesai</span>
         <strong id="countSelesai">0</strong>
       </article>
+
       <article class="stat-card">
         <span>Berlangsung</span>
         <strong id="countBerlangsung">0</strong>
       </article>
+
       <article class="stat-card">
         <span>Menunggu</span>
         <strong id="countMenunggu">0</strong>
       </article>
+
       <article class="stat-card">
         <span>Terlambat</span>
         <strong id="countTerlambat">0</strong>
       </article>
+
       <article class="stat-card">
         <span>Batal</span>
         <strong id="countBatal">0</strong>
@@ -60,8 +221,12 @@
           <p class="eyebrow">PERINGATAN OTOMATIS</p>
           <h2>Kontrol Risiko Penjadwalan</h2>
         </div>
-        <button id="resetBtn" class="btn secondary" type="button">Reset Filter</button>
+
+        <button id="resetBtn" class="btn secondary" type="button">
+          Reset Filter
+        </button>
       </div>
+
       <div id="warningArea" class="warning-grid"></div>
     </section>
 
@@ -71,10 +236,14 @@
           <p class="eyebrow">FILTER</p>
           <h2>Jadwal Hemodialisis</h2>
         </div>
-        <p class="muted"><span id="visibleCount">0</span> data ditampilkan</p>
+
+        <p class="muted">
+          <span id="visibleCount">0</span> data ditampilkan
+        </p>
       </div>
 
       <div class="filters">
+
         <label>
           Sesi
           <select id="filterSession">
@@ -106,8 +275,13 @@
 
         <label class="search-label">
           Cari Kode Pasien
-          <input id="searchPatient" type="search" placeholder="Contoh: P001" />
+          <input
+            id="searchPatient"
+            type="search"
+            placeholder="Contoh: P001"
+          />
         </label>
+
       </div>
 
       <div class="table-wrap">
@@ -124,12 +298,14 @@
               <th>Catatan</th>
             </tr>
           </thead>
+
           <tbody id="scheduleBody"></tbody>
         </table>
       </div>
     </section>
 
     <section class="two-column">
+
       <article class="section-card">
         <div class="section-heading">
           <div>
@@ -137,6 +313,7 @@
             <h2>Status Mesin HD</h2>
           </div>
         </div>
+
         <div id="machineGrid" class="machine-grid"></div>
       </article>
 
@@ -149,11 +326,13 @@
         </div>
 
         <div class="session-indicator">
+
           <div class="indicator-row">
             <div>
               <strong>Sesi Pagi</strong>
               <span id="pagiText">0 pasien</span>
             </div>
+
             <div class="progress">
               <div id="pagiBar" class="progress-bar"></div>
             </div>
@@ -164,18 +343,22 @@
               <strong>Sesi Siang</strong>
               <span id="siangText">0 pasien</span>
             </div>
+
             <div class="progress">
               <div id="siangBar" class="progress-bar"></div>
             </div>
           </div>
+
         </div>
 
         <div class="mini-note">
           <strong>Diskusi kelompok:</strong>
-          Apakah dashboard ini sudah cukup membantu petugas HD mencegah jadwal bentrok,
-          memantau mesin maintenance, dan melihat keterlambatan?
+          Apakah dashboard ini sudah cukup membantu petugas HD mencegah jadwal
+          bentrok, memantau mesin maintenance, dan melihat keterlambatan?
         </div>
+
       </article>
+
     </section>
 
     <section class="section-card">
@@ -185,6 +368,7 @@
           <h2>Yang Harus Dimodifikasi Kelompok</h2>
         </div>
       </div>
+
       <ol class="task-list">
         <li>Ubah tampilan agar memiliki identitas/desain kelompok sendiri.</li>
         <li>Gunakan data sintetis minimal 12–20 pasien dan 4–8 mesin HD.</li>
@@ -194,12 +378,67 @@
         <li>Pastikan link Netlify dapat dibuka dari browser/HP.</li>
       </ol>
     </section>
+
+    <!-- IDENTITAS KELOMPOK -->
+    <section class="group-section">
+
+      <h2>KELOMPOK 5B</h2>
+      <p class="group-title">
+        Praktikum Transformasi Manajemen Informasi Kesehatan Ginjal
+      </p>
+
+      <table class="member-table">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Nama Anggota</th>
+            <th>NIM</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mareta Widy Carelia</td>
+            <td>P1337437124050</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Barruna Dea Irta Azzahra</td>
+            <td>P1337437124054</td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>Ghina Nisrina Zulfa</td>
+            <td>P1337437124061</td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td>Maharani Cantika Fonda</td>
+            <td>P1337437124076</td>
+          </tr>
+
+          <tr>
+            <td>5</td>
+            <td>Fairuz Zaman</td>
+            <td>P1337437124091</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </section>
+
   </main>
 
   <footer>
-    Prototype Praktikum Transformasi Manajemen Informasi Kesehatan Ginjal • Data Sintetis
+    Prototype Praktikum Transformasi Manajemen Informasi Kesehatan Ginjal
+    • Kelompok 5B • Data Sintetis
   </footer>
 
   <script src="script.js"></script>
+
 </body>
 </html>
